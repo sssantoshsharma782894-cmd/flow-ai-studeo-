@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Flow Studio</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#0b1020;color:white;
+ font-family:Arial,sans-serif;padding:18px
+}
+header{text-align:center;padding:20px 5px}
+header h1{color:#8b9cff;font-size:27px}
+header p{color:#aab3ca}
+.card{
+ background:#171f35;padding:17px;border-radius:16px;
+ margin:15px 0;border:1px solid #303c59
+}
+label{display:block;margin:14px 0 8px;color:#cbd5ff}
+textarea,select{
+ width:100%;padding:13px;border-radius:10px;
+ border:1px solid #45516f;background:#0e1629;
+ color:white;font-size:15px
+}
+textarea{min-height:130px;resize:vertical}
+button{
+ width:100%;padding:14px;border:0;border-radius:10px;
+ background:#596cff;color:white;font-size:16px;
+ font-weight:bold;margin-top:12px
+}
+.output{white-space:pre-wrap;line-height:1.6;color:#dce4ff}
+.small{font-size:12px;color:#98a5c2;text-align:center}
+</style>
+</head>
+<body>
+
+<header>
+<h1>⚡ AI FLOW STUDIO</h1>
+<p>Your Personal Image & Video Prompt Studio</p>
+</header>
+
+<div class="card">
+<h3>🎬 Create Your Prompt</h3>
+
+<label>अपनी कहानी या Scene लिखें</label>
+<textarea id="story" placeholder="यहाँ अपनी कहानी या इमेज का विवरण लिखें..."></textarea>
+
+<label>Aspect Ratio चुनें</label>
+<select id="ratio">
+<option value="16:9">16:9 Landscape</option>
+<option value="9:16">9:16 Portrait</option>
+<option value="1:1">1:1 Square</option>
+</select>
+
+<label>Visual Style</label>
+<select id="style">
+<option>Ultra Realistic Cinematic</option>
+<option>3D CGI Animation</option>
+<option>2D Indian Comic Style</option>
+<option>Professional Digital Art</option>
+</select>
+
+<label>Quality</label>
+<select id="quality">
+<option>Ultra HD 4K</option>
+<option>High Quality 2K</option>
+<option>HD 1080p</option>
+</select>
+
+<button onclick="createPrompt()">✨ Prepare Image Prompt</button>
+</div>
+
+<div class="card">
+<h3>📋 Your Ready Prompt</h3>
+<div id="output" class="output">आपका तैयार Prompt यहाँ दिखाई देगा।</div>
+<button onclick="copyPrompt()">📋 Copy Prompt</button>
+</div>
+
+<p class="small">AI FLOW STUDIO • Version 1.0</p>
+
+<script>
+let finalPrompt="";
+
+function createPrompt(){
+ const story=document.getElementById("story").value.trim();
+ const ratio=document.getElementById("ratio").value;
+ const style=document.getElementById("style").value;
+ const quality=document.getElementById("quality").value;
+
+ if(!story){
+  alert("पहले अपनी कहानी या Scene लिखें!");
+  return;
+ }
+
+ finalPrompt=
+`Create a professional image based on this scene:
+
+SCENE:
+${story}
+
+VISUAL STYLE:
+${style}
+
+ASPECT RATIO:
+${ratio}
+
+IMAGE QUALITY:
+${quality}
+
+IMPORTANT INSTRUCTIONS:
+Maintain consistent character appearance.
+Keep faces, hairstyles and clothing consistent.
+Follow the exact scene description.
+Use clear composition and detailed backgrounds.
+No unwanted text, watermark or logo.
+Make the image visually cinematic.`;
+
+ document.getElementById("output").textContent=finalPrompt;
+}
+
+async function copyPrompt(){
+ if(!finalPrompt){
+  alert("पहले Prompt तैयार करें!");
+  return;
+ }
+ try{
+  await navigator.clipboard.writeText(finalPrompt);
+  alert("Prompt Copied Successfully!");
+ }catch(e){
+  alert("कृपया Prompt को मैन्युअली कॉपी करें।");
+ }
+}
+</script>
+</body>
+  </html>
+  
